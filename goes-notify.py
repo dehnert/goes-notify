@@ -104,6 +104,10 @@ def notify_sms(settings, dates):
         logging.info('Sending SMS.')
         client.messages.create(body=body, to=to_number, from_=from_number)
 
+def notify_webhook(url, msg):
+    requests.post(url, dict(content=msg))
+
+
 def main(settings):
     try:
         # obtain the json from the web url
@@ -150,6 +154,8 @@ def main(settings):
         notify_send_email(dates, current_apt, settings, use_gmail=settings.get('use_gmail'))
     if settings.get('twilio_account_sid'):
         notify_sms(settings, dates)
+    if 'WEBHOOK_URL' in os.environ:
+        notify_webhook(os.environ['WEBHOOK_URL'], msg)
 
 def _check_settings(config):
     required_settings = (
