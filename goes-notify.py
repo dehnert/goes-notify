@@ -114,7 +114,7 @@ def main(settings):
             logging.info('No tests available.')
             return
 
-        current_apt = datetime.strptime(settings['current_interview_date_str'], '%B %d, %Y')
+        current_apt = datetime.strptime(settings['current_interview_date_str'], '%Y-%m-%d')
         dates = []
         for o in data:
             if o['active']:
